@@ -3,20 +3,21 @@
 <head>
   <title>RUM Test</title>
 
+  <!-- Datadog RUM -->
   <script src="https://www.datadoghq-browser-agent.com/datadog-rum.js"></script>
   <script>
-   datadogRum.init({
-    applicationId: '2f0b3287-fa2d-4fd0-86ea-457f7dd030ae',
-    clientToken: 'pub0c24b08e56e7e0c76676e9217feb5a54',
-    site: 'us5.datadoghq.com',
-    service: '<SERVICE-NAME>',
-    env: '<ENV-NAME>',
-    version: '<VERSION-NUMBER>',
-    sessionSampleRate: 100,
-    sessionReplaySampleRate: 100,
-    trackResources: true,
-    trackUserInteractions: true,
-    trackLongTasks: true,
+    window.DD_RUM && window.DD_RUM.init({
+      applicationId: "YOUR_APP_ID",
+      clientToken: "YOUR_CLIENT_TOKEN",
+      site: "datadoghq.com",
+      service: "rummage",
+      env: "dev",
+      sessionSampleRate: 100,
+      sessionReplaySampleRate: 100,
+      trackResources: true,
+      trackUserInteractions: true,
+      trackLongTasks: true
+    });
   </script>
 </head>
 
@@ -28,7 +29,9 @@
 
   <script>
     function testClick() {
-      DD_RUM.addAction("button_clicked");
+      if (window.DD_RUM) {
+        DD_RUM.addAction("button_clicked");
+      }
       alert("Clicked!");
     }
 
