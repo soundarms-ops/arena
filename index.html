@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>RUM Test</title>
+
+  <script src="https://www.datadoghq-browser-agent.com/datadog-rum.js"></script>
+  <script>
+    window.DD_RUM && window.DD_RUM.init({
+      applicationId: "YOUR_APP_ID",
+      clientToken: "YOUR_CLIENT_TOKEN",
+      site: "datadoghq.com",
+      service: "rum-test",
+      env: "dev",
+      sampleRate: 100,
+      trackInteractions: true
+    });
+  </script>
+</head>
+
+<body>
+  <h1>RUM Test Page</h1>
+
+  <button onclick="testClick()">Click Me</button>
+  <button onclick="testError()">Trigger Error</button>
+
+  <script>
+    function testClick() {
+      DD_RUM.addAction("button_clicked");
+      alert("Clicked!");
+    }
+
+    function testError() {
+      throw new Error("Test error");
+    }
+  </script>
+</body>
+</html>
