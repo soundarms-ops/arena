@@ -1,17 +1,63 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <title>RUM Test</title>
   <title>Clean Test</title>
+
+  <script>
+    console.log("HEAD STARTED");
+  </script>
+
+  <!-- Datadog -->
+  <script>
+    console.log("Before loader");
+
+    (function(h,o,u,n,d){
+      console.log("Inside loader");
+
+      h=h[d]=h[d]||{q:[],onReady:function(c){h.q.push(c)}}
+
+      d=o.createElement(u);
+      d.async=1;
+      d.src=n;
+
+      d.onload = function() {
+        console.log("Datadog script LOADED");
+      };
+
+      d.onerror = function() {
+        console.log("Datadog script FAILED");
+      };
+
+      n=o.getElementsByTagName(u)[0];
+      n.parentNode.insertBefore(d,n);
+
+    })(window,document,'script','https://www.datadoghq-browser-agent.com/us5/v6/datadog-rum.js','DD_RUM');
+
+    window.DD_RUM.onReady(function () {
+      console.log("DD_RUM READY");
+
+      window.DD_RUM.init({
+        applicationId: 'b8edb5fa-fc58-4e80-9b30-e31fb9eb3df2',
+        clientToken: 'pubf4a27d30bf18eb50d1be442421ddb234',
+        site: "us5.datadoghq.com",
+        service: 'rume',
+        env: 'dev',				// e.g. 'prod', 'staging-1', 'dev'
+        version: '1.0.0'
+        sessionSampleRate: 100,			// capture 100% of sessions
+        sessionReplaySampleRate: 100,	// capture 100% of sessions with replay
+        trackResources: true,			// Enable Resource tracking
+        trackUserInteractions: true,	// Enable Action tracking
+        trackLongTasks: true,			// Enable Long Tasks tracking
+      });
+    });
+    console.log("SCRIPT RUNNING");
+  </script>
+
 </head>
 
 <body>
-
-<h1>Page Loaded</h1>
-
-<script>
-  alert("SCRIPT RUNNING");
-  console.log("SCRIPT RUNNING");
-</script>
-
+  <h1>Datadog Test</h1>
+  <h1>Clean Page</h1>
 </body>
 </html>
