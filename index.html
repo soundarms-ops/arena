@@ -59,5 +59,35 @@
 <body>
   <h1>Datadog Test</h1>
   <h1>Clean Page</h1>
+
+  <button onclick="testClick()">Click Me</button>
+  <button onclick="testAPI()">Call API</button>
+  <button onclick="testError()">Trigger Error</button>
+
+  <script>
+    function testClick() {
+      console.log("Clicked");
+
+      if (window.DD_RUM) {
+        DD_RUM.addAction("button_clicked");
+      }
+    }
+
+    function testAPI() {
+      fetch("https://jsonplaceholder.typicode.com/todos/1")
+        .then(r => r.json())
+        .then(d => {
+          console.log("API success", d);
+
+          if (window.DD_RUM) {
+            DD_RUM.addAction("api_called");
+          }
+        });
+    }
+
+    function testError() {
+      throw new Error("Test error from button");
+    }
+  </script>
 </body>
 </html>
