@@ -5,9 +5,38 @@
 
   <!-- Datadog RUM -->
 <script>
-    alert("JS WORKING");
-    console.log("JS WORKING");
-  </script>
+console.log("Before loader");
+
+(function(h,o,u,n,d){
+  console.log("Inside loader start");
+
+  h=h[d]=h[d]||{q:[],onReady:function(c){h.q.push(c)}}
+
+  d=o.createElement(u);
+  d.async=1;
+  d.src=n;
+  d.onload = function() {
+    console.log("Datadog script loaded");
+  };
+  d.onerror = function() {
+    console.log("Datadog script FAILED to load");
+  };
+
+  n=o.getElementsByTagName(u)[0];
+  n.parentNode.insertBefore(d,n)
+
+})(window,document,'script','https://www.datadoghq-browser-agent.com/us5/v6/datadog-rum.js','DD_RUM');
+
+window.DD_RUM.onReady(function () {
+  console.log("DD_RUM READY");
+
+  window.DD_RUM.init({
+    applicationId: "...",
+    clientToken: "...",
+    site: "us5.datadoghq.com"
+  });
+});
+</script>
   
 <script>
   (function(h,o,u,n,d) {
