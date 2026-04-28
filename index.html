@@ -1,92 +1,60 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>New RUM Test</title>
+  <title>RUM Test</title>
 
-  <!-- Datadog RUM -->
-<script>
-console.log("Before loader");
+  <script>
+    console.log("HEAD STARTED");
+  </script>
 
-(function(h,o,u,n,d){
-  console.log("Inside loader start");
+  <!-- Datadog -->
+  <script>
+    console.log("Before loader");
 
-  h=h[d]=h[d]||{q:[],onReady:function(c){h.q.push(c)}}
+    (function(h,o,u,n,d){
+      console.log("Inside loader");
 
-  d=o.createElement(u);
-  d.async=1;
-  d.src=n;
-  d.onload = function() {
-    console.log("Datadog script loaded");
-  };
-  d.onerror = function() {
-    console.log("Datadog script FAILED to load");
-  };
+      h=h[d]=h[d]||{q:[],onReady:function(c){h.q.push(c)}}
 
-  n=o.getElementsByTagName(u)[0];
-  n.parentNode.insertBefore(d,n)
+      d=o.createElement(u);
+      d.async=1;
+      d.src=n;
 
-})(window,document,'script','https://www.datadoghq-browser-agent.com/us5/v6/datadog-rum.js','DD_RUM');
+      d.onload = function() {
+        console.log("Datadog script LOADED");
+      };
 
-window.DD_RUM.onReady(function () {
-  console.log("DD_RUM READY");
+      d.onerror = function() {
+        console.log("Datadog script FAILED");
+      };
 
-  window.DD_RUM.init({
-    applicationId: "...",
-    clientToken: "...",
-    site: "us5.datadoghq.com"
-  });
-});
-</script>
-  
-<script>
-  (function(h,o,u,n,d) {
-    h = h[d] = h[d] || { q: [], onReady: function (c) { h.q.push(c) } }
-    d = o.createElement(u); d.async = 1; d.src = n; d.crossOrigin=''
-    n = o.getElementsByTagName(u)[0]; n.parentNode.insertBefore(d, n)
-  })(window, document, 'script', 'https://www.datadoghq-browser-agent.com/us5/v6/datadog-rum.js', 'DD_RUM')
+      n=o.getElementsByTagName(u)[0];
+      n.parentNode.insertBefore(d,n);
 
-Window.DD_RUM.onReady(function () {
-  Window.DD_RUM.init ({
-    applicationId: 'b8edb5fa-fc58-4e80-9b30-e31fb9eb3df2',
-    clientToken: 'pubf4a27d30bf18eb50d1be442421ddb234',
-    site: 'us5.datadoghq.com',
-    service: 'rume',
-    env: 'dev',				// e.g. 'prod', 'staging-1', 'dev'
-    version: '1.0.0'
-    sessionSampleRate: 100,			// capture 100% of sessions
-    sessionReplaySampleRate: 100,	// capture 100% of sessions with replay
-    trackResources: true,			// Enable Resource tracking
-    trackUserInteractions: true,	// Enable Action tracking
-    trackLongTasks: true,			// Enable Long Tasks tracking
-    
-});
-      // ----- Recommended options (commented by default) -----
+    })(window,document,'script','https://www.datadoghq-browser-agent.com/us5/v6/datadog-rum.js','DD_RUM');
 
-      // allowedTracingUrls: '<BACKEND-URL>', // Enable distributed tracing
-      // defaultPrivacyLevel: 'mask-user-input', // or 'allow' / 'mask-all'
+    window.DD_RUM.onReady(function () {
+      console.log("DD_RUM READY");
+
+      window.DD_RUM.init({
+        applicationId: 'b8edb5fa-fc58-4e80-9b30-e31fb9eb3df2',
+        clientToken: 'pubf4a27d30bf18eb50d1be442421ddb234',
+        site: "us5.datadoghq.com",
+        service: 'rume',
+        env: 'dev',				// e.g. 'prod', 'staging-1', 'dev'
+        version: '1.0.0'
+        sessionSampleRate: 100,			// capture 100% of sessions
+        sessionReplaySampleRate: 100,	// capture 100% of sessions with replay
+        trackResources: true,			// Enable Resource tracking
+        trackUserInteractions: true,	// Enable Action tracking
+        trackLongTasks: true,			// Enable Long Tasks tracking
+      });
     });
-  });
-</script>
+  </script>
 
 </head>
 
 <body>
-  <h1>New RUM Test Page</h1>
-
-  <button onclick="testClick()">Click Me</button>
-  <button onclick="testError()">Trigger Error</button>
-
-  <script>
-    function testClick() {
-      if (window.DD_RUM) {
-        DD_RUM.addAction("button_clicked");
-      }
-      alert("Clicked!");
-    }
-
-    function testError() {
-      throw new Error("Test error");
-    }
-  </script>
+  <h1>Datadog Test</h1>
 </body>
 </html>
